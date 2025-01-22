@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/upload-database', 'main');
+Route::view('/upload', 'main');
 
 Route::post('/upload-database', [DatabaseController::class, 'uploadDatabase'])->name('upload.database');
 

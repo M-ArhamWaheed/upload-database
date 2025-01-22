@@ -20,11 +20,11 @@ class DatabaseController extends Controller
     private function exportAndUploadDatabase()
     {
         // Export local database
-        $exportCommand = "mysqldump -u root -p'' upload_database > local_database.sql";
-        exec($exportCommand, $output, $returnVar);
+        $exportCommand = "D:\xampp\mysql\bin\mysqldump.exe -u root -p upload_database > local_database.sql";
+        exec($exportCommand . " 2>&1", $output, $returnVar);
 
         if ($returnVar !== 0) {
-            throw new \Exception('Error exporting database: ' . implode("\n", $output));
+            throw new \Exception('Error exporting database. Output: ' . implode("\n", $output));
         }
 
         // FTP upload
@@ -43,9 +43,10 @@ class DatabaseController extends Controller
             throw new \Exception('FTP login failed.');
         }
 
-        if (!ftp_put($ftpConnection, '/path/to/remote_directory/remote_database_backup.sql', 'local_database.sql', FTP_ASCII)) {
+        if (!ftp_put($ftpConnection, 'remote_database_backup.sql', 'local_database.sql', FTP_ASCII)) {
             ftp_close($ftpConnection);
-            throw new \Exception('Failed to upload the database file.');
+            $error = error_get_last();
+            throw new \Exception('Failed to upload the database file. Error: ' . $error['message']);
         }
 
         ftp_close($ftpConnection);
