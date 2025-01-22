@@ -43,7 +43,7 @@ class DatabaseController extends Controller
             throw new \Exception('FTP login failed.');
         }
 
-        if (!ftp_put($ftpConnection, 'remote_database_backup.sql', 'local_database.sql', FTP_ASCII)) {
+        if (!ftp_put($ftpConnection, 'remote_database_backup.sql', 'D:\xampp\htdocs\upload-database\local_database.sql', FTP_ASCII)) {
             ftp_close($ftpConnection);
             $error = error_get_last();
             throw new \Exception('Failed to upload the database file. Error: ' . $error['message']);
@@ -52,6 +52,6 @@ class DatabaseController extends Controller
         ftp_close($ftpConnection);
 
         // Clean up local file
-        unlink('local_database.sql');
+        unlink('D:\xampp\htdocs\upload-database\local_database.sql');
     }
 }
