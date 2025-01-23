@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\ExportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,4 +12,4 @@ Route::get('/user', function (Request $request) {
 
 // Route::post('addSqlData', [DatabaseController::class , 'sendSqlFile'] )
 
-Route::post('upload-database', [DatabaseController::class, 'uploadDatabase'])->name('upload-database');
+Route::post('upload-database', [ExportController::class, 'uploadDatabase'])->name('upload-database');
